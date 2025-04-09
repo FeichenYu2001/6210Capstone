@@ -185,6 +185,7 @@ function RecentJobs(props){
 							{!props.auth && list.map((job) => { return <div className="col-md-4 px-1"><Jobs auth={props.auth} role={job.role} company={job.company} loc={job.loc} src={job.logo}></Jobs></div>})}
 							{console.log(list)}
 							{isLoaded && (!isEdit || isRen) && list.map((job) => {
+
 								return <div className="col-md-4 px-1"><Jobs auth={props.auth}  aid={props.aid} compid={job.companyID} role={job.role}
 								jobDesc={job.jobDescription} salary={job.salary} dur={job.duration} pos={job.positions} deadline={job.deadline} jid={job._id}></Jobs></div>
 							})}

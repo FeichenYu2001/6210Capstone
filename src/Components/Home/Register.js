@@ -20,7 +20,6 @@ import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
 import Login from "./Login";
 
-var alert = require('alert');
 
 class Register extends Component{
     constructor() {
