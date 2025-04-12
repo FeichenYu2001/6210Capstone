@@ -6,6 +6,9 @@ import Details from './Details';
 import Footer from '../Home/Footer';
 import { Navbar, NavItem, Nav,NavLink } from 'reactstrap';
 import '../Styles/Applicant/Resume.css'
+import { withRouter } from 'react-router-dom';
+import { IoIosArrowBack } from 'react-icons/io';
+
 
 
 function Resume(props){
@@ -36,6 +39,26 @@ function Resume(props){
 
 	return ( <div className="viewResume">
 		<div className="header row mx-0"></div>
+		<div className="col-lg-3" style={{ marginTop: "20px", marginLeft: "20px" }}>
+				<button
+					className="goback"
+					onClick={() => props.history.push("/Dashboard")}
+					style={{
+					border: "1px solid #e9896a",
+					borderRadius: "12px",
+					padding: "6px 14px",
+					background: "none",
+					color: "#e9896a",
+					fontWeight: "500",
+					display: "flex",
+					alignItems: "center"
+					}}
+				>
+					<IoIosArrowBack size={18} style={{ marginRight: "6px" }} />
+					Dashboard
+				</button>
+				</div>
+
 		<div className="row mx-0 mt-5 candDetails">
 			<div className="col-md-4 socialMediaLinks"><Details aid={user.aid} field={"socialIcons"} edit={false}/></div>
 			<div className="col-md-4 personalDetails"><Details aid={user.aid} field={"personalDetails"} edit={false}/></div>
@@ -110,4 +133,4 @@ const mapStateToProps = state => ({
 export default 
 connect(
 	mapStateToProps
-)(Resume);
+)(withRouter(Resume));
