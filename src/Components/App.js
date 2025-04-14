@@ -7,6 +7,7 @@ import BuildResume from './Applicant/BuildResume';
 import Profile from './Applicant/Profile';
 import Applied from './Applicant/Applied';
 import Resume from './Applicant/Resume';
+import InterviewPrep from './Applicant/InterviewPrep';
 import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "../actions/authActions";
@@ -47,6 +48,7 @@ function App(){
 					<PrivateRoute path="/resume" component={Resume} exact/>
 					<PrivateRoute path="/applied" component={Applied} exact/>
 					<PrivateRoute path="/buildResume" component={BuildResume} exact/>
+					<PrivateRoute path="/interview-prep" component={InterviewPrep} />
 				</Switch>
 			</Router>
 			</Provider>

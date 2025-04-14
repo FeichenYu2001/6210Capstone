@@ -17,6 +17,7 @@ function SideNav(props)
             <li><a href="/buildResume"><span className="icons"><AiOutlineProfile size={18}/></span>Build Resume</a></li>
             <li><a href="/applied#appliedjobs"><span className="icons"><IoPaperPlaneOutline size={18}/></span>Applied Jobs</a></li>
             <li><a href="/resume"><span className="icons"><IoWalletOutline size={18}/></span>Resume</a></li>
+            <li><a href="/interview-prep"><span className="icons"><IoKeyOutline size={18}/></span>Interview Prep</a></li>
             <li><a onClick={props.logout}><span className="icons"><IoLogOutOutline size={18}/></span>Logout</a></li>
         </ul>
     </div>
