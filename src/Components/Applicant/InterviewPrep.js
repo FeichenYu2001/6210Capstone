@@ -57,7 +57,7 @@ function InterviewPrep(props) {
         { title: "Machine Learning Qs", src: "http://localhost:1234/interview-prep/Machine_Learning_Qs.html" },
         { title: "Deep Learning Qs", src: "http://localhost:1234/interview-prep/Deep_Learning_Qs.html" },
         { title: "Behavioral Qs", src: "http://localhost:1234/interview-prep/Behavioral_Qs.html" },
-        { title: "Tech - Deep Learning Qs", src: "http://localhost:1234/interview-prep/Tech_Qs.html" },
+        { title: "Tech Qs", src: "http://localhost:1234/interview-prep/Tech_Qs.html" },
         { title: "A to Z Python Cheatsheet", src: "http://localhost:1234/interview-prep/A_to_Z_Python_Cheatsheet.html" }
     ];
 
