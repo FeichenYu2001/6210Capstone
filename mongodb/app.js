@@ -40,7 +40,7 @@ require("./config/passport")(passport);
 
 // ✅ Serve static files
 app.use('/public', express.static(path.join(__dirname, 'public'))); // general static
-app.use('/public/interview-prep', express.static(path.join(__dirname, 'public/interview-prep'))); // interview prep folder
+app.use('/interview-prep', express.static(path.join(__dirname, 'public/interview-prep'))); // interview prep folder
 
 // Routes
 app.use('/Applicant', Applicant);
