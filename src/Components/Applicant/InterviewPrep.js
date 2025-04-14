@@ -68,10 +68,25 @@ function InterviewPrep(props) {
             <Hero logout={onLogoutClick} user={user} />
             <div className="row mx-0 mt-5 pb-5">
                 <div className="col-lg-3" style={{ borderRight: "1px solid #eee" }}>
-                    <button className="goback" onClick={props.history.goBack}>
-                        <IoIosArrowBack className="backicon" size={24} />
-                        <span>Dashboard</span>
-                    </button>
+                    <div style={{ marginTop: "20px", marginLeft: "20px" }}>
+                        <button
+                            className="goback"
+                            onClick={() => props.history.push("/Dashboard")}
+                            style={{
+                                border: "1px solid #e9896a",
+                                borderRadius: "12px",
+                                padding: "6px 14px",
+                                background: "none",
+                                color: "#e9896a",
+                                fontWeight: "500",
+                                display: "flex",
+                                alignItems: "center"
+                            }}
+                        >
+                            <IoIosArrowBack size={18} style={{ marginRight: "6px" }} />
+                            Dashboard
+                        </button>
+                    </div>
                     <SideNav logout={onLogoutClick} />
                     <CircularProgress completeness={completeness} />
                 </div>
