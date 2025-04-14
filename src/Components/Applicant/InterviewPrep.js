@@ -52,13 +52,15 @@ function InterviewPrep(props) {
             });
     }, [user.aid]);
 
+	const backendBaseURL = `${window.location.protocol}//${window.location.hostname}:1234`;
+
     const sections = [
-        { title: "General Qs", src: "http://localhost:1234/interview-prep/General_Qs.html" },
-        { title: "Machine Learning Qs", src: "http://localhost:1234/interview-prep/Machine_Learning_Qs.html" },
-        { title: "Deep Learning Qs", src: "http://localhost:1234/interview-prep/Deep_Learning_Qs.html" },
-        { title: "Behavioral Qs", src: "http://localhost:1234/interview-prep/Behavioral_Qs.html" },
-        { title: "Tech Qs", src: "http://localhost:1234/interview-prep/Tech_Qs.html" },
-        { title: "A to Z Python Cheatsheet", src: "http://localhost:1234/interview-prep/A_to_Z_Python_Cheatsheet.html" }
+        { title: "General Qs", src: `${backendBaseURL}/interview-prep/General_Qs.html` },
+        { title: "Machine Learning Qs", src: `${backendBaseURL}/interview-prep/Machine_Learning_Qs.html` },
+        { title: "Deep Learning Qs", src: `${backendBaseURL}/interview-prep/Deep_Learning_Qs.html` },
+        { title: "Behavioral Qs", src: `${backendBaseURL}/interview-prep/Behavioral_Qs.html` },
+        { title: "Tech Qs", src: `${backendBaseURL}/interview-prep/Tech_Qs.html` },
+        { title: "A to Z Python Cheatsheet", src: `${backendBaseURL}/interview-prep/A_to_Z_Python_Cheatsheet.html` }
     ];
 
     const [selectedSection, setSelectedSection] = useState(sections[0].src);
