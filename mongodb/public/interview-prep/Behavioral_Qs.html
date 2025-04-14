@@ -4,77 +4,128 @@
   <meta charset="UTF-8">
   <title>5. Behavioral/HR Interview Questions</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 2em; }
-    ol { line-height: 1.6; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      margin: 0;
+      padding: 2em;
+      background-color: transparent;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 2em;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 1.5em;
+      color: #2c3e50;
+    }
+
+    ol {
+      line-height: 1.8;
+      padding-left: 1.5em;
+    }
+
+    li {
+      margin-bottom: 0.75em;
+      padding: 0.5em;
+      border-left: 4px solid #3498db;
+      background-color: #f1f9ff;
+      transition: background-color 0.2s ease;
+    }
+
+    li:hover {
+      background-color: #e8f4ff;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1em;
+      }
+
+      .container {
+        padding: 1em;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Behavioral/HR Interview Questions</h1>
-  <ol>
-    <li>Tell me about yourself.</li>
-    <li>What are your greatest strengths?</li>
-    <li>What are your greatest weaknesses?</li>
-    <li>Tell me about something you did – or failed to do – that you now feel a little ashamed of.</li>
-    <li>Why are you leaving (or did you leave) this position?</li>
-    <li>The “Silent Treatment”</li>
-    <li>Why should I hire you?</li>
-    <li>Aren’t you overqualified for this position?</li>
-    <li>Where do you see yourself five years from now?</li>
-    <li>Describe your ideal company, location and job.</li>
-    <li>Why do you want to work at our company?</li>
-    <li>What are your career options right now?</li>
-    <li>Why have you been out of work so long?</li>
-    <li>Tell me honestly about the strong points and weak points of your boss (company, management team, etc.).</li>
-    <li>What good books have you read lately?</li>
-    <li>Tell me about a situation when your work was criticized.</li>
-    <li>What are your outside interests?</li>
-    <li>The “Fatal Flaw” question</li>
-    <li>How do you feel about reporting to a younger person (minority, woman, etc)?</li>
-    <li>On confidential matters...</li>
-    <li>Would you lie for the company?</li>
-    <li>Looking back, what would you do differently in your life?</li>
-    <li>Could you have done better in your last job?</li>
-    <li>Can you work under pressure?</li>
-    <li>What makes you angry?</li>
-    <li>Why aren’t you earning more money at this stage of your career?</li>
-    <li>Who has inspired you in your life and why?</li>
-    <li>What was the toughest decision you ever had to make?</li>
-    <li>Tell me about the most boring job you’ve ever had.</li>
-    <li>Have you been absent from work more than a few days in any previous position?</li>
-    <li>What changes would you make if you came on board?</li>
-    <li>I’m concerned that you don’t have as much experience as we’d like in...</li>
-    <li>How do you feel about working nights and weekends?</li>
-    <li>Are you willing to relocate or travel?</li>
-    <li>Do you have the stomach to fire people? Have you had experience firing many people?</li>
-    <li>Why have you had so many jobs?</li>
-    <li>What do you see as the proper role/mission of a good [job title]?</li>
-    <li>What would you say to your boss if he’s crazy about an idea, but you think it stinks?</li>
-    <li>How could you have improved your career progress?</li>
-    <li>What would you do if a fellow executive on your own corporate level wasn’t pulling his/her weight... and this was hurting your department?</li>
-    <li>You’ve been with your firm a long time. Won’t it be hard switching to a new company?</li>
-    <li>May I contact your present employer for a reference?</li>
-    <li>Give me an example of your creativity (analytical skill, managing ability, etc.).</li>
-    <li>Where could you use some improvement?</li>
-    <li>What do you worry about?</li>
-    <li>How many hours a week do you normally work?</li>
-    <li>What’s the most difficult part of being a [job title]?</li>
-    <li>The “Hypothetical Problem”</li>
-    <li>What was the toughest challenge you’ve ever faced?</li>
-    <li>Have you considered starting your own business?</li>
-    <li>What are your goals?</li>
-    <li>What do you look for when you hire people?</li>
-    <li>Sell me this stapler (or other object on interviewer’s desk).</li>
-    <li>The Salary Question – How much money do you want?</li>
-    <li>The Illegal Question</li>
-    <li>The “Secret” Illegal Question</li>
-    <li>What was the toughest part of your last job?</li>
-    <li>How do you define success... and how do you measure up to your own definition?</li>
-    <li>The Opinion Question – What do you think about [controversial topic]?</li>
-    <li>If you won a $10 million lottery, would you still work?</li>
-    <li>Looking back on your last position, have you done your best work?</li>
-    <li>Why should I hire you from the outside when I could promote someone from within?</li>
-    <li>Tell me something negative you’ve heard about our company...</li>
-    <li>On a scale of one to ten, rate me as an interviewer.</li>
-  </ol>
+  <div class="container">
+    <h1>Behavioral/HR Interview Questions</h1>
+    <ol>
+      <li>Tell me about yourself.</li>
+      <li>What are your greatest strengths?</li>
+      <li>What are your greatest weaknesses?</li>
+      <li>Tell me about something you did – or failed to do – that you now feel a little ashamed of.</li>
+      <li>Why are you leaving (or did you leave) this position?</li>
+      <li>The “Silent Treatment”</li>
+      <li>Why should I hire you?</li>
+      <li>Aren’t you overqualified for this position?</li>
+      <li>Where do you see yourself five years from now?</li>
+      <li>Describe your ideal company, location and job.</li>
+      <li>Why do you want to work at our company?</li>
+      <li>What are your career options right now?</li>
+      <li>Why have you been out of work so long?</li>
+      <li>Tell me honestly about the strong points and weak points of your boss (company, management team, etc.).</li>
+      <li>What good books have you read lately?</li>
+      <li>Tell me about a situation when your work was criticized.</li>
+      <li>What are your outside interests?</li>
+      <li>The “Fatal Flaw” question</li>
+      <li>How do you feel about reporting to a younger person (minority, woman, etc)?</li>
+      <li>On confidential matters...</li>
+      <li>Would you lie for the company?</li>
+      <li>Looking back, what would you do differently in your life?</li>
+      <li>Could you have done better in your last job?</li>
+      <li>Can you work under pressure?</li>
+      <li>What makes you angry?</li>
+      <li>Why aren’t you earning more money at this stage of your career?</li>
+      <li>Who has inspired you in your life and why?</li>
+      <li>What was the toughest decision you ever had to make?</li>
+      <li>Tell me about the most boring job you’ve ever had.</li>
+      <li>Have you been absent from work more than a few days in any previous position?</li>
+      <li>What changes would you make if you came on board?</li>
+      <li>I’m concerned that you don’t have as much experience as we’d like in...</li>
+      <li>How do you feel about working nights and weekends?</li>
+      <li>Are you willing to relocate or travel?</li>
+      <li>Do you have the stomach to fire people? Have you had experience firing many people?</li>
+      <li>Why have you had so many jobs?</li>
+      <li>What do you see as the proper role/mission of a good [job title]?</li>
+      <li>What would you say to your boss if he’s crazy about an idea, but you think it stinks?</li>
+      <li>How could you have improved your career progress?</li>
+      <li>What would you do if a fellow executive on your own corporate level wasn’t pulling his/her weight... and this was hurting your department?</li>
+      <li>You’ve been with your firm a long time. Won’t it be hard switching to a new company?</li>
+      <li>May I contact your present employer for a reference?</li>
+      <li>Give me an example of your creativity (analytical skill, managing ability, etc.).</li>
+      <li>Where could you use some improvement?</li>
+      <li>What do you worry about?</li>
+      <li>How many hours a week do you normally work?</li>
+      <li>What’s the most difficult part of being a [job title]?</li>
+      <li>The “Hypothetical Problem”</li>
+      <li>What was the toughest challenge you’ve ever faced?</li>
+      <li>Have you considered starting your own business?</li>
+      <li>What are your goals?</li>
+      <li>What do you look for when you hire people?</li>
+      <li>Sell me this stapler (or other object on interviewer’s desk).</li>
+      <li>The Salary Question – How much money do you want?</li>
+      <li>The Illegal Question</li>
+      <li>The “Secret” Illegal Question</li>
+      <li>What was the toughest part of your last job?</li>
+      <li>How do you define success... and how do you measure up to your own definition?</li>
+      <li>The Opinion Question – What do you think about [controversial topic]?</li>
+      <li>If you won a $10 million lottery, would you still work?</li>
+      <li>Looking back on your last position, have you done your best work?</li>
+      <li>Why should I hire you from the outside when I could promote someone from within?</li>
+      <li>Tell me something negative you’ve heard about our company...</li>
+      <li>On a scale of one to ten, rate me as an interviewer.</li>
+    </ol>
+  </div>
 </body>
 </html>
