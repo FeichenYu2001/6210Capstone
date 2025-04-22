@@ -4,28 +4,31 @@ const Schema = mongoose.Schema;
 var counterSchema = require('./counter');
 
 let CompanySchema = new Schema({
-    Company_Id: {type: Number, require:true},
-    Company_Name : {type: String, require:true},
-	Domain : {type: String, require:true},
-	About_Us : {type: String},
-	Location : {type: String},
-	Contact : {type: String, require:true},
-	Email_Id : {type: String},
-    logo: {type: String}
+    Company_Id: { type: Number, required: true, default: 0 },
+    Company_Name: { type: String, required: true },
+    Domain: { type: String, required: true },
+    About_Us: { type: String },
+    Location: { type: String },
+    Contact: { type: String, required: true },
+    Email_Id: { type: String, required: true },
+    logo: { type: String },
+    password: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now }
 });
 
 const Counter = mongoose.model('Counter', counterSchema, "C_Counter");
 
 CompanySchema.pre('save', function(next) {
     var curr = this;
-    Counter.findOneAndUpdate({Id: "id"}, {$inc: { seq: 1}}, {new: true, upsert: true}).then(function(doc) {
-		curr.Company_Id = doc.seq;
-		next();
-    })
-    .catch(function(error) {
-        console.error("counter error-> : "+error);
-        throw error;
-    });
+    Counter.findOneAndUpdate({ Id: "id" }, { $inc: { seq: 1 } }, { new: true, upsert: true })
+        .then(function(doc) {
+            curr.Company_Id = doc.seq;
+            next();
+        })
+        .catch(function(error) {
+            console.error("counter error-> : " + error);
+            throw error;
+        });
 });
 
 // Export the model

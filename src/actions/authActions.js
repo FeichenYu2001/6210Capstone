@@ -51,6 +51,37 @@ export const loginUser = userData => dispatch => {
     );
 };
 
+// ✅ Company Login - get company token
+export const loginCompany = companyData => dispatch => {
+  axios
+    .post("http://localhost:1234/Company/login", companyData)
+    .then(res => {
+      if (!res || !res.data || !res.data.token) {
+        throw new Error("No token returned from company login");
+      }
+
+      const { token } = res.data;
+
+      // Save token to localStorage
+      localStorage.setItem("jwtToken", token);
+
+      // Set token to Auth header for future requests
+      setAuthToken(token);
+
+      // Decode token to get company data
+      const decoded = jwt_decode(token);
+
+      // Set current user
+      dispatch(setCurrentUser(decoded));
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response?.data || { message: err.message }
+      })
+    );
+};
+
 // Set logged in user
 export const setCurrentUser = decoded => {
   return {
