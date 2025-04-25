@@ -10,7 +10,7 @@ import {
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("http://localhost:1234/Applicant/create", userData)
+    .post("http://localhost:1234/applicant/create", userData)
     .then(res => history.push("")) // Redirect to login page
     .catch(err =>
       dispatch({
@@ -23,24 +23,15 @@ export const registerUser = (userData, history) => dispatch => {
 // Login - get user token
 export const loginUser = userData => dispatch => {
   axios
-    .post("http://localhost:1234/Applicant/login", userData)
+    .post("http://localhost:1234/applicant/login", userData)
     .then(res => {
       if (!res || !res.data || !res.data.token) {
         throw new Error("No token returned from login");
       }
-
       const { token } = res.data;
-
-      // Save token to localStorage
       localStorage.setItem("jwtToken", token);
-
-      // Set token to Auth header for future requests
       setAuthToken(token);
-
-      // Decode token to get user data
       const decoded = jwt_decode(token);
-
-      // Set current user
       dispatch(setCurrentUser(decoded));
     })
     .catch(err =>
@@ -50,6 +41,7 @@ export const loginUser = userData => dispatch => {
       })
     );
 };
+
 
 // ✅ Company Login - get company token
 export const loginCompany = companyData => dispatch => {
