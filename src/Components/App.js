@@ -9,6 +9,7 @@ import Applied from './Applicant/Applied';
 import Resume from './Applicant/Resume';
 import InterviewPrep from './Applicant/InterviewPrep';
 import CompanyDashboard from './Company/CompanyDashboard'; // ✅ 新增：引入公司 Dashboard
+import JobPostForm from './Company/JobPostForm'; // ✅ Import Post Job form
 
 import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
@@ -53,6 +54,7 @@ function App() {
             <PrivateRoute path="/buildResume" component={BuildResume} exact />
             <PrivateRoute path="/interview-prep" component={InterviewPrep} />
             <Route path="/company-dashboard" component={CompanyDashboard} exact /> {/* ✅ 新增：公司 Dashboard */}
+            <Route path="/post-job" component={JobPostForm} exact /> {/* ✅ New Route for posting jobs */}
             <Route path="/dummy" component={Dummy} exact />
           </Switch>
         </Router>

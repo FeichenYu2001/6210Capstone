@@ -1,37 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
-import axios from 'axios';
 import Hero from '../Applicant/Hero';
 import Footer from '../Home/Footer';
 
 function CompanyDashboard() {
   const [companyData, setCompanyData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [errorMsg, setErrorMsg] = useState("");
-
-  const token = localStorage.getItem("companyToken");
-  const decoded = token ? jwt_decode(token.replace("Bearer ", "")) : {};
-  const cid = decoded.cid;
 
   useEffect(() => {
-    if (!cid) {
-      setErrorMsg("Not logged in or invalid token.");
-      setLoading(false);
+    const token = localStorage.getItem("companyToken");
+    if (!token) {
+      setCompanyData(null);
       return;
     }
 
-    axios
-      .get(`http://localhost:1234/Company/${cid}`)
-      .then((res) => {
-        setCompanyData(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("❌ Failed to fetch company info:", err);
-        setErrorMsg("Failed to fetch company info. Please try again later.");
-        setLoading(false);
-      });
-  }, [cid]);
+    const decoded = jwt_decode(token.replace("Bearer ", ""));
+    setCompanyData({
+      Company_Name: decoded.name || "N/A",
+      Email_Id: decoded.email || "N/A",
+      Location: decoded.location || "N/A",
+      Domain: "N/A",     // 📝 Optional: default if domain is missing from token
+      Contact: "N/A",    // 📝 Optional: default if contact is missing from token
+      About_Us: "N/A"    // 📝 Optional: default if about_us is missing from token
+    });
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("companyToken");
@@ -45,7 +36,7 @@ function CompanyDashboard() {
           logout={handleLogout}
           user={{ name: companyData.Company_Name }}
           isCompany={true}
-          skipApplicantFetch={true} // ✅ 用于跳过 Drawer 中对 Applicant 的请求
+          skipApplicantFetch={true}
         />
       )}
       <div className="row mx-0 mt-5 pb-5">
@@ -64,11 +55,7 @@ function CompanyDashboard() {
         <div className="col-lg-9">
           <div className="card p-4">
             <h4>Company Information</h4>
-            {loading ? (
-              <p>Loading...</p>
-            ) : errorMsg ? (
-              <div className="alert alert-danger">{errorMsg}</div>
-            ) : (
+            {companyData ? (
               <ul>
                 <li><strong>Name:</strong> {companyData.Company_Name}</li>
                 <li><strong>Domain:</strong> {companyData.Domain}</li>
@@ -77,6 +64,8 @@ function CompanyDashboard() {
                 <li><strong>Contact:</strong> {companyData.Contact}</li>
                 <li><strong>About:</strong> {companyData.About_Us}</li>
               </ul>
+            ) : (
+              <div className="alert alert-danger">Not logged in or invalid token.</div>
             )}
           </div>
         </div>

@@ -1,81 +1,52 @@
-var Job = require('../models/Job');
-var alert = require('alert');
+const Job = require('../models/Job');
 
-exports.Job_create = function (req, res) {
-    
-    var job = new Job(
-        {
-            
-        }
-    );
-    
-    job.save(function (err) {
-        if (err) {
-            console.log(err);
-        }
-        res.redirect("http://localhost:3000/");
-    })
-};
-
-exports.Job_details = function (req, res) {
-    Job.findOne({_id: req.params.jid}).then((data) => {
-        return res.json(data);
-    })
-    .catch((error) => {
-        console.log('error: ', error);
-    });
-};
-
-exports.Job_update_app = function (req, res) {
-    if(req.params.field=="add"){
-        Job.findOneAndUpdate({_id: req.params.jid}, {$inc: {"currApplications": 1}}, {new: true}).then((data) => {
-            if(data)
-            {   
-                if(data.maxApplications==data.currApplications){
-                    Job.findOneAndUpdate({_id: req.params.jid}, {$set: {active: false}}, {new: true}).then((data1) =>{
-                        if(data1){
-                            return res;
-                        }
-                    })
-                }
-                return res;
-            }
-        });
+// Create job
+exports.Job_create = async function (req, res) {
+    try {
+      const job = new Job(req.body);  // ✅ Construct new Job object
+      await job.save();               // ✅ Save to MongoDB
+      console.log("✅ New job created:", job.role);  // ✅ Print success in terminal
+      res.status(201).json({ message: "Job created successfully!" });
+    } catch (err) {
+      console.error("❌ Job Post Error:", err);
+      res.status(400).json({ error: err.message });
     }
-    else if(req.params.field=="del"){
-        Job.findOneAndUpdate({_id: req.params.jid}, {$inc: {"currApplications": -1}}, {new: true}).then((data) => {
-            if(data)
-            {   
-                if(data.maxApplications>data.currApplications){
-                    Job.findOneAndUpdate({_id: req.params.jid}, {$set: {active: true}}, {new: true}).then((data1) =>{
-                        if(data1){
-                            return res;
-                        }
-                    })
-                }
-                return res;
-            }
-        });
-    }
-    
+  };
+
+// Get one job
+exports.Job_details = async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.jid);
+    res.json(job);
+  } catch (error) {
+    console.error('❌ Job Fetch Error:', error);
+    res.status(500).json({ message: "Error fetching job details" });
+  }
 };
 
-exports.Job_delete = function (req, res) {
-   	Job.findOneAndDelete({_id: req.params.jid}, function (err) {
-        if (err) console.log(err);
-        res.redirect("http://localhost:3000/dummy");
-    })
+// Get all jobs
+exports.Job_details_all = async (req, res) => {
+  try {
+    const jobs = await Job.find({});
+    res.json(jobs);
+  } catch (error) {
+    console.error('❌ All Jobs Error:', error);
+    res.status(500).json({ message: "Error fetching all jobs" });
+  }
 };
 
-exports.Job_details_all = function (req, res) {
-    
-    Job.find({$and: [{active: true}, {deadline: {"$gte": new Date().toISOString()}}]}).then((data) => {
-        if(data){
-            //console.log(data);
-        return res.json(data);
-        }
-    })
-    .catch((error) => {
-        console.log('error: ', error);
-    });
+// Update application count (not needed now)
+exports.Job_update_app = async (req, res) => {
+  res.json({ message: "Update job field placeholder" });
+};
+
+// Delete job
+exports.Job_delete = async (req, res) => {
+  try {
+    await Job.findByIdAndDelete(req.params.jid);
+    res.json({ message: "Job deleted" });
+  } catch (error) {
+    console.error('❌ Delete Job Error:', error);
+    res.status(500).json({ message: "Error deleting job" });
+  }
 };

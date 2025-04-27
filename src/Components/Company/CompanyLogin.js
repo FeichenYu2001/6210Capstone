@@ -1,104 +1,78 @@
-import React, { Component } from "react";
-import { Form, Input, Button } from "reactstrap";
-import { Modal } from "rsuite";
-import { IoKeyOutline } from "react-icons/io5";
-import { AiOutlineUser } from "react-icons/ai";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { loginCompany } from "../../actions/authActions"; 
-import "../../Styles/Applicant/Login.css"; // 根据你的样式路径
+// src/components/Company/CompanyLogin.js
 
-class CompanyLogin extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: "",
-      password: "",
-      errors: {}
-    };
-  }
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
-  componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/company/dashboard");
-    }
-  }
+function CompanyLogin() {
+  const [formData, setFormData] = useState({
+    Email_Id: '',
+    password: ''
+  });
+  const history = useHistory();
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/company/dashboard");
-    }
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-  }
-
-  onChange = (e) => {
-    this.setState({ [e.target.id]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  onSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const companyData = {
-        email: this.state.email,
-        password: this.state.password
-      };      
-      console.log("login data: ", companyData);
-    this.props.loginCompany(companyData);
+    try {
+      const res = await axios.post('http://localhost:1234/company/login', {
+        email: formData.Email_Id,
+        password: formData.password
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      localStorage.setItem("companyToken", res.data.token);
+      alert("✅ Company Login Successful!");
+      history.push("/company-dashboard");
+    } catch (err) {
+      console.error('❌ Login Error:', err.response?.data || err.message);
+      if (err.response?.data?.emailNotFound) {
+        alert('❌ Company not found!');
+      } else if (err.response?.data?.passwordincorrect) {
+        alert('❌ Incorrect password!');
+      } else {
+        alert("❌ Login failed: " + (err.response?.data?.error || err.message));
+      }
+    }
   };
 
-  render() {
-    const { errors } = this.state;
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="form-group">
+        <label htmlFor="Email_Id">Email</label>
+        <input 
+          type="email" 
+          id="Email_Id" 
+          className="form-control" 
+          value={formData.Email_Id} 
+          onChange={handleChange} 
+          required 
+        />
+      </div>
 
-    return (
-      <Modal show={true} backdrop="static" size="xs">
-        <Modal.Header><h5>Company Login</h5></Modal.Header>
-        <Modal.Body>
-          <Form noValidate onSubmit={this.onSubmit}>
-            <div className="cfield">
-            <Input
-                type="email"
-                id="email"
-                placeholder="Email"
-                onChange={this.onChange}
-                value={this.state.email}
-                />
+      <div className="form-group">
+        <label htmlFor="password">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          className="form-control" 
+          value={formData.password} 
+          onChange={handleChange} 
+          required 
+        />
+      </div>
 
-              <AiOutlineUser className="icon" size={24} />
-            </div>
-            <div className="cfield">
-              <Input
-                type="password"
-                id="password"
-                placeholder="Password"
-                onChange={this.onChange}
-                value={this.state.password}
-                required
-              />
-              <IoKeyOutline className="icon" size={24} />
-            </div>
-            <div className="cfield">
-              <Button className="Submitbutton" type="submit">
-                Login
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
-    );
-  }
+      <button type="submit" className="btn btn-primary w-100 mt-3">
+        Login
+      </button>
+    </form>
+  );
 }
 
-CompanyLogin.propTypes = {
-  loginCompany: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-  errors: state.errors
-});
-
-export default connect(mapStateToProps, { loginCompany })(withRouter(CompanyLogin));
+export default CompanyLogin;

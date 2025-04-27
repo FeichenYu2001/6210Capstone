@@ -1,17 +1,16 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const Application = require('../models/Application');
 
-var Application_controller = require('../controllers/Application');
-
-router.post('/create', Application_controller.Application_create);
-
-router.get('/:appid', Application_controller.Application_details);
-
-router.get('/details/:aid', Application_controller.Application_details_individual);
-
-router.put('/:appid/update', Application_controller.Application_update);
-
-router.delete('/:appid/delete', Application_controller.Application_delete);
-
+// Get applications for an applicant
+router.get('/details/:aid', async (req, res) => {
+  try {
+    const applications = await Application.find({ applicantID: req.params.aid });
+    res.json(applications);
+  } catch (error) {
+    console.error('🔥 Application Fetch Error:', error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 
 module.exports = router;
