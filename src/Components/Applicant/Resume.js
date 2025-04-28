@@ -9,6 +9,7 @@ import '../Styles/Applicant/Resume.css'
 import { withRouter } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 
+<a href="/resume_refinement">Resume Refinement Tool</a>
 
 
 function Resume(props){
