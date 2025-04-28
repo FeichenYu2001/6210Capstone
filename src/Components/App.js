@@ -8,8 +8,9 @@ import Profile from './Applicant/Profile';
 import Applied from './Applicant/Applied';
 import Resume from './Applicant/Resume';
 import InterviewPrep from './Applicant/InterviewPrep';
-import CompanyDashboard from './Company/CompanyDashboard'; // ✅ 新增：引入公司 Dashboard
-import JobPostForm from './Company/JobPostForm'; // ✅ Import Post Job form
+import RefineResume from './Applicant/RefineResume';  // ✅ <--- ADD THIS LINE
+import CompanyDashboard from './Company/CompanyDashboard';
+import JobPostForm from './Company/JobPostForm';
 
 import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
@@ -20,7 +21,7 @@ import PrivateRoute from "../Components/private-route/PrivateRoute";
 import { Provider } from "react-redux";
 import store from "../store";
 
-// ✅ Check for applicant token
+// Check for applicant token
 if (localStorage.jwtToken) {
   const token = localStorage.jwtToken;
   setAuthToken(token);
@@ -33,11 +34,10 @@ if (localStorage.jwtToken) {
   }
 }
 
-// ✅ Check for company token (optional, just for consistent auth header)
+// Check for company token (optional)
 if (localStorage.companyToken) {
   const token = localStorage.companyToken;
   setAuthToken(token);
-  // You can decode companyToken if needed
 }
 
 function App() {
@@ -52,9 +52,10 @@ function App() {
             <PrivateRoute path="/resume" component={Resume} exact />
             <PrivateRoute path="/applied" component={Applied} exact />
             <PrivateRoute path="/buildResume" component={BuildResume} exact />
-            <PrivateRoute path="/interview-prep" component={InterviewPrep} />
-            <Route path="/company-dashboard" component={CompanyDashboard} exact /> {/* ✅ 新增：公司 Dashboard */}
-            <Route path="/post-job" component={JobPostForm} exact /> {/* ✅ New Route for posting jobs */}
+            <PrivateRoute path="/interview-prep" component={InterviewPrep} exact />
+            <PrivateRoute path="/RefineResume" component={RefineResume} exact /> {/* ✅ <--- ADD THIS LINE */}
+            <Route path="/company-dashboard" component={CompanyDashboard} exact />
+            <Route path="/post-job" component={JobPostForm} exact />
             <Route path="/dummy" component={Dummy} exact />
           </Switch>
         </Router>

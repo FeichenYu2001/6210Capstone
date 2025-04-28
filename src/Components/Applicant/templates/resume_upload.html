@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Refinement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffecd1; /* Light orange background */
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #ff7f32; /* Dark orange */
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background-color: #ff7f32; /* Dark orange */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #e76f2f;
+        }
+        input[type="file"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Resume Refinement Tool</h1>
+    </header>
+
+    <div class="container">
+        <form action="/resume_refinement" method="post" enctype="multipart/form-data">
+            <label for="resume">Upload Resume (PDF preferred):</label>
+            <input type="file" name="resume" required><br><br>
+
+            <label for="job_description">Enter Job Description:</label>
+            <input type="text" name="job_description" required><br><br>
+
+            <button type="submit">Refine Resume</button>
+        </form>
+    </div>
+</body>
+</html>
