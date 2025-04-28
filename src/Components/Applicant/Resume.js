@@ -9,18 +9,6 @@ import '../Styles/Applicant/Resume.css'
 import { withRouter } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 
-// Create an anchor tag
-const link = document.createElement('a');
-link.href = '/resume_refinement';
-link.textContent = 'Resume Refinement Tool';
-
-// Optionally style it
-link.style.margin = '10px';
-link.style.fontSize = '18px';
-
-// Append it to an existing element on the page
-document.getElementById('your-target-div').appendChild(link);
-
 
 
 function Resume(props){
@@ -70,7 +58,7 @@ function Resume(props){
 					Dashboard
 				</button>
 				</div>
-		<div id="your-target-div"></div>
+
 
 		<div className="row mx-0 mt-5 candDetails">
 			<div className="col-md-4 socialMediaLinks"><Details aid={user.aid} field={"socialIcons"} edit={false}/></div>
