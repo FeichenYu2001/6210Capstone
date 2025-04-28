@@ -10,6 +10,7 @@ router.post('/login', Company_controller.Company_login);
 router.post('/create', Company_controller.Company_create);
 router.put('/:cid/update', Company_controller.Company_update);
 router.delete('/:cid/delete', Company_controller.Company_delete);
-router.get('/:cid', Company_controller.Company_details);
+
+router.get('/:cid', Company_controller.Company_getById);
 
 module.exports = router;

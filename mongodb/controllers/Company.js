@@ -6,7 +6,7 @@ const keys = require('../config/keys');
 const Company = require('../models/Company');
 const validateRegisterInput = require("../validation/CompanyRegister");
 
-// ✅ Company Registration
+// Company Registration
 const Company_register = async (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -40,7 +40,7 @@ const Company_register = async (req, res) => {
   }
 };
 
-// ✅ Company Login
+// Company Login
 const Company_login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -48,14 +48,12 @@ const Company_login = async (req, res) => {
     const company = await Company.findOne({ Email_Id: email });
 
     if (!company) {
-      console.log('Company not found');
       return res.status(404).json({ emailNotFound: "Company not found" });
     }
 
     const isMatch = await bcrypt.compare(password, company.password);
 
     if (!isMatch) {
-      console.log('Password incorrect');
       return res.status(400).json({ passwordincorrect: "Password incorrect" });
     }
 
@@ -68,7 +66,6 @@ const Company_login = async (req, res) => {
 
     const token = jwt.sign(payload, keys.secretOrKey, { expiresIn: 604800 }); // 7 days
 
-    console.log('Company login success');
     return res.status(200).json({
       success: true,
       token: 'Bearer ' + token
@@ -80,24 +77,31 @@ const Company_login = async (req, res) => {
   }
 };
 
-// 📝 Dummy placeholder for Company create (optional, admin use)
+// Dummy placeholders (optional)
 const Company_create = (req, res) => {
   res.json({ message: "Company create API called (not implemented yet)" });
 };
 
-// 📝 Dummy placeholder for Company update (optional)
 const Company_update = (req, res) => {
   res.json({ message: "Company update API called (not implemented yet)" });
 };
 
-// 📝 Dummy placeholder for Company delete (optional)
 const Company_delete = (req, res) => {
   res.json({ message: "Company delete API called (not implemented yet)" });
 };
 
-// 📝 Dummy placeholder for Company details (optional)
-const Company_details = (req, res) => {
-  res.json({ message: "Company details API called (not implemented yet)" });
+// ✅ New: Get Company by Company_Id
+const Company_getById = async (req, res) => {
+  try {
+    const company = await Company.findOne({ Company_Id: req.params.cid });
+    if (!company) {
+      return res.status(404).json({ message: "Company not found" });
+    }
+    res.status(200).json(company);
+  } catch (error) {
+    console.error('🔥 Get Company Error:', error.message);
+    res.status(500).json({ message: "Server error fetching company" });
+  }
 };
 
 // ✅ Export everything
@@ -107,5 +111,5 @@ module.exports = {
   Company_create,
   Company_update,
   Company_delete,
-  Company_details
+  Company_getById
 };
