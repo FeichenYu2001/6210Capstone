@@ -3,7 +3,9 @@ import { FaBars } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
 import { Drawer } from 'rsuite';
 import { Divider } from 'rsuite';
-import SideNav from './SideNav';
+import ApplicantSideNav from './SideNav';
+import CompanySideNav from '../Company/SideNav';
+
 
 import 'rsuite/dist/styles/rsuite-default.css';
 
@@ -49,7 +51,12 @@ function DrawerComponent(props) {
             )}
           </div>
           <Divider />
-          <SideNav logout={props.logout}></SideNav>
+            {isApplicant ? (
+                <ApplicantSideNav logout={props.logout} />
+              ) : (
+                <CompanySideNav logout={props.logout} />
+              )}
+
         </Drawer.Body>
       </Drawer>
     </div>
