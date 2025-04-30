@@ -29,65 +29,66 @@ class Details extends Component {
 	};
 
 	componentDidMount() {
-		axios.get("http://localhost:1234/Applicant/"+this.props.aid)
-		.then((response) => {
-		  const data = response.data;
-		  console.log(data);
-		  this.setState({ items: data, isLoaded: true});
-		  console.log("fine1");
-		  if(this.state.field=="personal" && Object.keys(data).length){
-			this.setState({isEmpty: false});
-		  }
-		  if(this.state.field=="categories" && data.categories.length)
-		  {
-			  this.setState({isEmpty: false});
-		  }
-		  if(this.state.field=="contact")
-		  {
-			  if(Object.keys(data.address).length)
-			  {
-				if(data.address.city && data.address.country && data.address.state && data.address.pincode)
-				{
-					this.setState({isEmpty: false});
+		if (this.state.field === "applied") {
+		  // Fetch all applications for this applicant
+		  axios
+			.get(`http://${window.location.hostname}:1234/application/details/${this.props.aid}`)
+			.then(res => {
+			  const apps = res.data;
+			  this.setState({
+				items: { applied: apps },
+				isLoaded: true,
+				isEmpty: apps.length === 0
+			  });
+			})
+			.catch(err => {
+			  console.error("Error fetching applied jobs:", err);
+			});
+		} else {
+		  // Fetch applicant profile for the other tabs
+		  axios
+			.get(`http://${window.location.hostname}:1234/Applicant/${this.props.aid}`)
+			.then(response => {
+			  const data = response.data;
+			  this.setState({ items: data, isLoaded: true });
+	  
+			  // Existing “empty” checks for each field
+			  if (this.state.field === "personal" && Object.keys(data).length) {
+				this.setState({ isEmpty: false });
+			  }
+			  if (this.state.field === "categories" && data.categories.length) {
+				this.setState({ isEmpty: false });
+			  }
+			  if (this.state.field === "contact" && data.address) {
+				const { city, country, state, pincode } = data.address;
+				if (city && country && state && pincode) {
+				  this.setState({ isEmpty: false });
 				}
 			  }
-		  }
-		  if(this.state.field=="social" && data.socialMedia)
-		  {
-			this.setState({isEmpty: false});
-		  }
-		  if(this.state.field=="edu" && data.resume.education.length){
-			this.setState({isEmpty: false});
-		  }
-		  if(this.state.field=="exp" && data.resume.experience.length)
-		  {
-			this.setState({isEmpty: false});
-		  }
-		  if(this.state.field=="proj" && data.resume.projects.length){
-			this.setState({isEmpty: false});
-		  } 
-		  if(this.state.field=="ach" && data.resume.achievements.length){
-			this.setState({isEmpty: false});
-		  }
-		  if(this.state.field=="social" && data.socialMedia){
-			this.setState({isEmpty: false});
-		  }
-		  if(this.state.field=="socialIcons" && data.socialMedia){
-			this.setState({isEmpty: false});
-		  }
-		  if(this.state.field=="skill" && data.resume.skills.length){
-			this.setState({isEmpty: false});
-		  } 
-		  if(this.state.field=="applied" && data.applied.length)
-		  {
-			this.setState({isEmpty: false});
-		  }
-		  //console.log('Data has been received!!');
-		})
-		.catch(() => {
-		  //alert("error retrieving data");
-		});
-	}
+			  if ((this.state.field === "social" || this.state.field === "socialIcons") && data.socialMedia) {
+				this.setState({ isEmpty: false });
+			  }
+			  if (this.state.field === "edu" && data.resume.education.length) {
+				this.setState({ isEmpty: false });
+			  }
+			  if (this.state.field === "exp" && data.resume.experience.length) {
+				this.setState({ isEmpty: false });
+			  }
+			  if (this.state.field === "proj" && data.resume.projects.length) {
+				this.setState({ isEmpty: false });
+			  }
+			  if (this.state.field === "ach" && data.resume.achievements.length) {
+				this.setState({ isEmpty: false });
+			  }
+			  if (this.state.field === "skill" && data.resume.skills.length) {
+				this.setState({ isEmpty: false });
+			  }
+			})
+			.catch(err => {
+			  console.error("Error fetching applicant profile:", err);
+			});
+		}
+	  }	  
 
 
 	render() {

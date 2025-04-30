@@ -1,58 +1,64 @@
-var Application = require('../models/Application');
-var alert = require('alert');
+// controllers/Application.js
+const Application = require('../models/Application');
 
+// Create a new application
+exports.Application_create = (req, res) => {
+  const { jid, aid } = req.body;
+  const application = new Application({
+    JobID: jid,
+    ApplicantID: aid
+  });
 
-exports.Application_create = function (req, res) {
-    
-    var application = new Application(
-        {
-            JobID: req.body.jid,
-            ApplicantID: req.body.aid,
-            DoA: req.body.date,
-            aStatus: 0
-        }
-    );
-    
-    application.save(function (err) {
-        if (err) {
-            console.log(err);
-        }
-        else{
-            return res.json(application._id);
-        }    
-    })
+  application.save((err, saved) => {
+    if (err) {
+      console.error('❌ Application save error', err);
+      return res.status(500).json({ error: 'Failed to create application' });
+    }
+    return res.status(201).json(saved);
+  });
 };
 
-exports.Application_details = function (req, res) {
-    Application.findOne({'_id': req.params.appid}).then((data) => {
-        //console.log(data)
-        return res.json(data);
-    })
-    .catch((error) => {
-        console.log('error: ', error);
+// Get one application by its _id
+exports.Application_details = (req, res) => {
+  Application.findById(req.params.appid)
+    .then(app => res.json(app))
+    .catch(err => {
+      console.error('❌ Application fetch error', err);
+      res.status(500).json({ error: 'Server error' });
     });
 };
 
-exports.Application_update = function (req, res) {
-    Application.findOneAndUpdate({_id: req.params.appid}, {$set: req.body}, function (err, application) {
-        if (err) console.log(err);
-        alert('Applicant details updated successfully');
-        res.redirect("http://localhost:3000/dummy");
+// Update an application
+exports.Application_update = (req, res) => {
+  Application.findByIdAndUpdate(
+    req.params.appid,
+    req.body,
+    { new: true }
+  )
+    .then(updated => res.json(updated))
+    .catch(err => {
+      console.error('❌ Application update error', err);
+      res.status(500).json({ error: 'Server error' });
     });
 };
 
-exports.Application_delete = function (req, res) {
-   	Application.findOneAndDelete({_id: req.params.appid}, function (err) {
-        if (err) console.log(err);
-        return res;
-    })
+// Delete an application
+exports.Application_delete = (req, res) => {
+  Application.findByIdAndDelete(req.params.appid)
+    .then(() => res.json({ message: 'Deleted' }))
+    .catch(err => {
+      console.error('❌ Application delete error', err);
+      res.status(500).json({ error: 'Server error' });
+    });
 };
 
-exports.Application_details_individual = function (req, res) {
-    Application.find({'ApplicantID': req.params.aid}).then((data) => {
-            return res.json(data);
-    })
-    .catch((error) => {
-        console.log('error: ', error);
+// Get all applications for a given applicant
+exports.Application_details_individual = (req, res) => {
+  Application.find({ ApplicantID: req.params.aid })
+    .populate('JobID')    // if you want to pull in job info
+    .then(apps => res.json(apps))
+    .catch(err => {
+      console.error('❌ Application fetch individual error', err);
+      res.status(500).json({ error: 'Server error' });
     });
 };

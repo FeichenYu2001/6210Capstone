@@ -6,6 +6,7 @@ const passport = require('passport');
 const applicantRoutes = require('./routes/Applicant');
 const companyRoutes = require('./routes/Company');
 const jobRoutes = require('./routes/Job');
+const applicationRoutes = require('./routes/Application');
 
 const db = require('./config/keys').mongoURI;
 
@@ -26,6 +27,7 @@ app.use('/interview-prep', express.static('public/interview-prep'));
 app.use('/applicant', applicantRoutes);
 app.use('/company', companyRoutes);
 app.use('/job', jobRoutes);
+app.use('/application', applicationRoutes);
 
 // MongoDB
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })

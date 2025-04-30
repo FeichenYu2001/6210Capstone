@@ -1,94 +1,96 @@
-import React, {useState, useEffect} from 'react';
+// /Applicant/RenderApplied.js
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../Styles/Applicant/RenderApplied.css';
-import {RiDeleteBin5Fill} from 'react-icons/ri';
-import {Badge} from 'reactstrap';
-import {IoLocationOutline} from 'react-icons/io5';
+import { RiDeleteBin5Fill } from 'react-icons/ri';
+import { Badge } from 'reactstrap';
+import { IoLocationOutline } from 'react-icons/io5';
 
-function RenderApplied(props)
-{
-    const [appliedlist, setappliedlist] = useState(props.applied)
-    const [date, setdate] = useState("")
-    const [joblist, setjoblist] = useState({})
-    const [complist, setcomplist] = useState({})
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [status, setStatus] = useState("secondary")
-    const [aStatus, setAStatus] = useState("Applied");
-    const [isDelete, setIsDelete] = useState(false);
+export default function RenderApplied({ applied }) {
+  const [application, setApplication] = useState(null);
+  const [job, setJob] = useState(null);
+  const [company, setCompany] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
 
-    function handleDelete(e){
-      var appid = props.applied;
-      axios({
-        method: 'delete',
-        url: "http://localhost:1234/Application/"+appid+"/delete",
-        headers: {}, 
-        });
-      axios({
-        method: 'delete',
-          url: "http://localhost:1234/Applicant/"+appliedlist.ApplicantID+"/delete/apply",
-          headers: {}, 
-          data: {
-            appid: appid// This is the body part
-          }
-        });
-      axios({
-          method: 'put',
-          url: "http://localhost:1234/Job/"+appliedlist.JobID+"/updateApp/del",
-        });
-      alert("Application Withdrawn Successfully!");
-      setIsDelete(true);
-  }
+  // Fetch the chain: Application → Job → Company
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data: appData } = await axios.get(
+          `http://${window.location.hostname}:1234/application/${applied._id}`
+        );
+        const { data: jobData } = await axios.get(
+          `http://${window.location.hostname}:1234/job/${appData.JobID}`
+        );
+        const { data: compData } = await axios.get(
+          `http://${window.location.hostname}:1234/company/${jobData.companyID}`
+        );
+        setApplication(appData);
+        setJob(jobData);
+        setCompany(compData);
+        setIsLoaded(true);
+      } catch (err) {
+        console.error('Fetch failed:', err.response || err.message);
+      }
+    }
+    fetchData();
+  }, [applied._id]);
 
+  // Delete the application
+  const handleDelete = async () => {
+    try {
+      const resp = await axios.delete(
+        `http://${window.location.hostname}:1234/application/${applied._id}`
+      );
+      console.log('Delete response:', resp.data);
+      alert('🗑️ Application Withdrawn Successfully!');
+      setIsDeleted(true);
+    } catch (err) {
+      console.error('Delete failed:', err.response || err.message);
+      if (err.response) {
+        alert(`❌ Error ${err.response.status}: ${err.response.data.error || err.response.statusText}`);
+      } else {
+        alert(`❌ Network error: ${err.message}`);
+      }
+    }
+  };
 
-    useEffect(() => {
-            
-            axios.get("http://localhost:1234/Application/"+props.applied)
-            .then((res) => { 
-                setappliedlist(res.data);
-                setdate(new Date(res.data.DoA.split("T")[0]).toString());
-                var color = res.data.aStatus;
-                
-                if(color==1){
-                  setStatus("warning");
-                  setAStatus("Shortlisted");
-                }
-                else if(color==2){
-                  setStatus("success");
-                  setAStatus("Accepted")
-                }
-                else if(color==3){
-                  setStatus("danger");
-                  setAStatus("Rejected")
-                }
+  // Don’t render anything if still loading or already deleted
+  if (!isLoaded || isDeleted) return null;
 
-                axios.get("http://localhost:1234/Job/"+res.data.JobID)
-                .then((res) => {
-                  setjoblist(res.data);
-                  
-                  axios.get("http://localhost:1234/Company/"+res.data.companyID)
-                  .then((res) => {
-                    setcomplist(res.data);
-                    setIsLoaded(true);
-                  })
-                })                
-            })
-    },[]);
+  // Map status to badge
+  const statusMap = ['secondary', 'warning', 'success', 'danger'];
+  const textMap   = ['Applied', 'Shortlisted', 'Accepted', 'Rejected'];
+  const idx = application.aStatus || 0;
 
-    return(<tbody>
-        {isLoaded && !isDelete && <tr>
-            <td>
-                <ul className="appliedcompany">
-                   <li>{complist.Company_Name}</li>
-                   <li className="appliedlocation"><IoLocationOutline />{complist.Location}</li> 
-                </ul>
-            </td>
-            <td>{joblist.role}</td>
-            <td>{ date.split(" ")[1] + " " + date.split(" ")[2] + ", " + date.split(" ")[3] }</td>
-            <td><Badge color={status}>{aStatus}</Badge></td>
-            <td><button style={{backgroundColor:"transparent"}} onClick={handleDelete}><RiDeleteBin5Fill size={20} className="r-icons"/></button></td>
-            </tr>
-        }
-    </tbody>);
+  return (
+    <tbody>
+      <tr>
+        <td>
+          <ul className="appliedcompany">
+            <li>{company.Company_Name}</li>
+            <li className="appliedlocation">
+              <IoLocationOutline /> {company.Location}
+            </li>
+          </ul>
+        </td>
+        <td>{job.role}</td>
+        <td>{new Date(application.DoA).toLocaleDateString()}</td>
+        <td>
+          <Badge color={statusMap[idx]}>
+            {textMap[idx]}
+          </Badge>
+        </td>
+        <td>
+          <button
+            style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
+            onClick={handleDelete}
+          >
+            <RiDeleteBin5Fill size={20} />
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  );
 }
-
-export default RenderApplied;
