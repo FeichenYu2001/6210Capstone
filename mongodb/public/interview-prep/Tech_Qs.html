@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Deep Learning Interview Questions</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      margin: 0;
+      padding: 2em;
+      background-color: transparent;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 2em;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 1.5em;
+      color: #2c3e50;
+    }
+
+    ol {
+      line-height: 1.8;
+      padding-left: 1.5em;
+    }
+
+    li {
+      margin-bottom: 0.75em;
+      padding: 0.5em;
+      border-left: 4px solid #3498db;
+      background-color: #f1f9ff;
+      transition: background-color 0.2s ease;
+    }
+
+    li:hover {
+      background-color: #e8f4ff;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1em;
+      }
+
+      .container {
+        padding: 1em;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Deep Learning Interview Questions</h1>
+    <ol>
+      <li>What is padding</li>
+      <li>Sigmoid Vs Softmax</li>
+      <li>What is PoS Tagging</li>
+      <li>What is tokenization</li>
+      <li>What is topic modeling</li>
+      <li>What is back propagation</li>
+      <li>What is the idea behind GANs</li>
+      <li>What is the Computational Graph</li>
+      <li>What is sigmoid What does it do</li>
+      <li>What is Named-Entity Recognition</li>
+      <li>Explain the masked language model</li>
+      <li>How do you preprocess text in NLP</li>
+      <li>How do you extract features in NLP</li>
+      <li>How is wordvec different from Glove</li>
+      <li>What Are the Different Layers on CNN</li>
+      <li>What makes CNNs translation invariant</li>
+      <li>How is fastText different from wordvec</li>
+      <li>Explain Generative Adversarial Network</li>
+      <li>What is backward and forward propagation</li>
+      <li>What are Syntactic and Semantic Analysis</li>
+      <li>What is a local optimum</li>
+      <li>Explain gates used in LSTM with their functions</li>
+      <li>What is ReLU and how is it better than sigmoid or tanh</li>
+      <li>What is transfer learning and have you used it before</li>
+      <li>What is multi-task learning and when should it be used</li>
+      <li>Difference between convex and non-convex cost function</li>
+      <li>Why do we remove stop words and when do we not remove them</li>
+      <li>Explain the difference between an epoch, a batch, and an iteration</li>
+      <li>What is the difference between NLP and NLU</li>
+      <li>For online learning, would you prefer SGD or Adagrad and why</li>
+      <li>What is a Multi-layer Perceptron (MLP)</li>
+      <li>Is it always bad to have local optima?</li>
+      <li>In node2vec, what does embedding represent — topological similarity or nearness?</li>
+      <li>What do you understand by Boltzmann Machines and Restricted Boltzmann Machines?</li>
+      <li>How to compute an inverse matrix faster using computational tricks</li>
+      <li>For rare words, should you use CBOW or SkipGram for wordvec training?</li>
+      <li>What is pooling in CNN? Why do we need it?</li>
+      <li>Describe the structure of ANNs and RNNs</li>
+      <li>How to select a batch size? Will it improve results?</li>
+      <li>What are N-grams and how can we use them?</li>
+      <li>How large should N be in bag-of-words when using N-grams?</li>
+      <li>How can neural nets be used for text classification and computer vision?</li>
+      <li>Do gradient descent methods always converge at the same point?</li>
+      <li>What is gradient descent and how does it work?</li>
+      <li>What are autoencoders? Describe layers and 3 use cases.</li>
+      <li>What is vanishing gradient descent?</li>
+      <li>Difference between vanishing and exploding gradient</li>
+      <li>How to handle dying ReLU node problems</li>
+      <li>What is the use of the leaky ReLU function?</li>
+      <li>What are the different deep learning frameworks?</li>
+      <li>Difference between machine learning and deep learning</li>
+      <li>What is a dropout layer and how does it help?</li>
+      <li>Why does dropout act as a regularizer?</li>
+      <li>How to know if your model has exploding gradients?</li>
+      <li>How to handle exploding gradient problems?</li>
+      <li>How does an LSTM network work?</li>
+      <li>What problem does Bi-LSTM solve over LSTM?</li>
+      <li>Difference between LSTM and GRU</li>
+      <li>What happens to CNN predictions if the image is rotated?</li>
+      <li>How does CNN handle translation and rotation invariance?</li>
+      <li>Define TF-IDF and how to convert text to vectors with it</li>
+      <li>Name the three primary CNN layers and how they are used</li>
+      <li>Describe a typical CNN architecture</li>
+      <li>What is dropout and batch normalization? When and why to use them?</li>
+      <li>Difference between online and batch learning</li>
+      <li>Is dropout used on the test set?</li>
+      <li>What is an activation function? Why use it?</li>
+      <li>Explain 3 types of activation functions</li>
+      <li>What is the range of activation functions?</li>
+      <li>Why is ReLU a good activation function?</li>
+      <li>Why don’t we use ReLU in the output layer?</li>
+      <li>What happens if we use linear activation instead of ReLU?</li>
+      <li>When is a many-to-one RNN architecture appropriate?</li>
+      <li>What is RNN and how does it work?</li>
+      <li>Why avoid sigmoid/tanh in hidden layers of deep networks?</li>
+      <li>Compare Sigmoid, tanh, Softmax, ReLU, and Leaky ReLU</li>
+      <li>Why is Tanh preferred over Sigmoid?</li>
+      <li>What are word embeddings and why are they useful?</li>
+      <li>What is WordVec?</li>
+      <li>Advantages of character embeddings over word embeddings</li>
+      <li>How to get sentence meaning from word embeddings?</li>
+      <li>Would you use gradient boosting trees or logistic regression for BOW classification?</li>
+      <li>What is bag of words? How to vectorize with it?</li>
+      <li>Pros and cons of bag of words?</li>
+      <li>Main difference between Adam and SGD?</li>
+      <li>Pros and cons of SGD over vanilla gradient descent?</li>
+      <li>Compare SGD, batch GD, and mini-batch GD — use cases and tradeoffs</li>
+      <li>When would you choose GD over SGD and vice versa?</li>
+      <li>How to choose number of filters and filter size in CNN layers?</li>
+      <li>How can CNN be used for text classification?</li>
+      <li>Why CNNs over DNNs for image classification?</li>
+      <li>Two ways to visualize CNN features?</li>
+      <li>Why do segmentation CNNs use encoder-decoder structures?</li>
+      <li>What is a convolutional layer? Why not just use dense layers?</li>
+      <li>Advantages of parameter sharing in convolution</li>
+      <li>Why use convolution over fully connected for images?</li>
+      <li>Why use many small convolutional kernels instead of few large ones?</li>
+      <li>Why is Softmax used as the final activation?</li>
+      <li>How does BatchNormalization differ in training vs inference?</li>
+      <li>How does batch size affect neural network training?</li>
+      <li>Why shuffle data when using mini-batch gradient descent?</li>
+      <li>Why is mini-batch gradient descent more efficient?</li>
+      <li>Why is BERT better than traditional NLP models?</li>
+      <li>How do you initialize weights in a neural network?</li>
+      <li>Why use small random weights in a neural net? What if constant?</li>
+      <li>What happens if all weights in a ReLU-based NN are initialized the same?</li>
+      <li>What is backpropagation? Why do we need it?</li>
+      <li>Why large filter sizes can be bad in early CNN layers?</li>
+      <li>Which is more powerful: a decision tree or a deep network without activations?</li>
+      <li>Why are decision trees easier to interpret than deep neural networks?</li>
+      <li>Would you prefer boosted trees or random forest for parallel computing?</li>
+    </ol>
+  </div>
+</body>
+</html>
