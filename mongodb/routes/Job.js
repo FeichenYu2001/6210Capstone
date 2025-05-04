@@ -1,14 +1,23 @@
-const express        = require('express');
-const router         = express.Router();
-const Job_controller = require('../controllers/Job');
+const express       = require('express');
+const router        = express.Router();
+const JobController = require('../controllers/Job');
 
-// Must come first so “company” isn’t read as a job ID
-router.get('/company',                Job_controller.Job_get_by_company);
+// Must come before '/:jid' so “company” isn’t mistaken for a job ID
+router.get('/company',              JobController.Job_get_by_company);
 
-router.post('/create',                Job_controller.Job_create);
-router.get('/:jid',                   Job_controller.Job_details);
-router.get('/',                       Job_controller.Job_details_all);
-router.put('/:jid/updateApp/:field',  Job_controller.Job_update_app);
-router.delete('/:jid/delete',         Job_controller.Job_delete);
+// Create a new job
+router.post('/create',              JobController.Job_create);
+
+// Get a single job by ID
+router.get('/:jid',                 JobController.Job_details);
+
+// Get all jobs
+router.get('/',                     JobController.Job_details_all);
+
+// Update a specific job field (e.g., application count)
+router.put('/:jid/updateApp/:field',JobController.Job_update_app);
+
+// Delete a job
+router.delete('/:jid/delete',       JobController.Job_delete);
 
 module.exports = router;

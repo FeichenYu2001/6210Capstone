@@ -11,31 +11,32 @@ import InterviewPrep from './Applicant/InterviewPrep';
 import RefineResume from './Applicant/RefineResume';
 import CompanyDashboard from './Company/CompanyDashboard';
 import JobPostForm from './Company/JobPostForm';
-import ManageJobs from './Company/ManageJobs';  // ← NEW
+import ManageJobs from './Company/ManageJobs';
 
-import jwt_decode from "jwt-decode";
-import setAuthToken from "../utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "../actions/authActions";
-import PrivateRoute from "../Components/private-route/PrivateRoute";
+import jwt_decode from 'jwt-decode';
+import setAuthToken from '../utils/setAuthToken';
+import { setCurrentUser, logoutUser } from '../actions/authActions';
+import PrivateRoute from '../Components/private-route/PrivateRoute';
+import { Provider } from 'react-redux';
+import store from '../store';
 
-import { Provider } from "react-redux";
-import store from "../store";
-
-// Applicant token setup...
+// Applicant token setup
 if (localStorage.jwtToken) {
   const token = localStorage.jwtToken;
   setAuthToken(token);
   const decoded = jwt_decode(token);
   store.dispatch(setCurrentUser(decoded));
-  if (decoded.exp < Date.now() / 1000) {
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
     store.dispatch(logoutUser());
-    window.location.href = "/";
+    window.location.href = '/';
   }
 }
 
 // Company token setup (optional)
 if (localStorage.companyToken) {
-  setAuthToken(localStorage.companyToken);
+  const token = localStorage.companyToken;
+  setAuthToken(token);
 }
 
 function App() {
@@ -43,19 +44,18 @@ function App() {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route path="/" component={Home} exact />
-          <PrivateRoute path="/Dashboard" component={Dashboard} exact />
-          <PrivateRoute path="/profile" component={Profile} exact />
-          <PrivateRoute path="/resume" component={Resume} exact />
-          <PrivateRoute path="/applied" component={Applied} exact />
-          <PrivateRoute path="/buildResume" component={BuildResume} exact />
-          <PrivateRoute path="/interview-prep" component={InterviewPrep} exact />
-          <PrivateRoute path="/RefineResume" component={RefineResume} exact />
-
-          <Route path="/company-dashboard" component={CompanyDashboard} exact />
-          <Route path="/post-job" component={JobPostForm} exact />
-          <Route path="/company-jobs" component={ManageJobs} exact />  {/* ← NEW */}
-          <Route path="/dummy" component={Dummy} exact />
+          <Route exact path="/" component={Home} />
+          <PrivateRoute exact path="/Dashboard" component={Dashboard} />
+          <PrivateRoute exact path="/profile" component={Profile} />
+          <PrivateRoute exact path="/resume" component={Resume} />
+          <PrivateRoute exact path="/applied" component={Applied} />
+          <PrivateRoute exact path="/buildResume" component={BuildResume} />
+          <PrivateRoute exact path="/interview-prep" component={InterviewPrep} />
+          <PrivateRoute exact path="/RefineResume" component={RefineResume} />
+          <Route exact path="/company-dashboard" component={CompanyDashboard} />
+          <Route exact path="/post-job" component={JobPostForm} />
+          <Route exact path="/company-jobs" component={ManageJobs} />
+          <Route exact path="/dummy" component={Dummy} />
         </Switch>
       </Router>
     </Provider>

@@ -1,32 +1,40 @@
 from flask import Flask, render_template, request
 from utils.resume_parser import extract_text
+from utils.keyword_matcher import keyword_match
 from utils.ats_checker import ats_check
 from utils.grammar_check import grammar_check
-from utils.keyword_matcher import keyword_match
 import os
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
-# Ensure uploads folder exists
+# Ensure the uploads folder exists
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
+# Remove frame-blocking header if you ever embed via iframe
+@app.after_request
+def allow_iframe(response):
+    response.headers.pop('X-Frame-Options', None)
+    return response
+
+# Serve at both /refine and /resume_refinement
+@app.route('/refine', methods=['GET', 'POST'])
 @app.route('/resume_refinement', methods=['GET', 'POST'])
 def resume_refinement():
-    # GET → show the upload form
+    # GET → show upload form
     if request.method == 'GET':
         return render_template('resume_upload.html')
 
     # POST → process the uploaded resume
-    file = request.files['resume']
-    job_desc = request.form['job_description']
+    file = request.files.get('resume')
+    job_desc = request.form.get('job_description', '')
 
     # Save file
     filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
     file.save(filename)
 
-    # Extract text & check format
+    # Extract text & file format
     resume_text = extract_text(filename)
     file_ext = os.path.splitext(filename)[1].lower()
     good_format = (file_ext == '.pdf')
@@ -43,7 +51,7 @@ def resume_refinement():
         2
     )
 
-    # Render results
+    # Render results template
     return render_template(
         'resume_result.html',
         match_score=match_score,
