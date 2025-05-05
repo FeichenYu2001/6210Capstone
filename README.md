@@ -7,26 +7,26 @@ An interactive, full-stack web portal where **job seekers** can build and refine
 ## 📸 Screenshots
 
 ### Landing Page  
-![Landing Page 1](https://github.com/FeichenYu2001/6210Capstone/raw/main/public/images/landing-1.png)  
-![Landing Page 2](https://github.com/FeichenYu2001/6210Capstone/raw/main/public/images/landing-2.png)  
-![Landing Page 3](https://github.com/FeichenYu2001/6210Capstone/raw/main/public/images/landing-3.png)  
+![Landing Page 1](images/landing-1.png)  
+![Landing Page 2](images/landing-2.png)  
+![Landing Page 3](images/landing-3.png)  
 
 ### Candidate Dashboard  
-![Candidate Dashboard](https://github.com/FeichenYu2001/6210Capstone/raw/main/public/images/candidate-dashboard.png)  
+![Candidate Dashboard](images/candidate_dashboard.png)  
 
 ### Resume Refinement  
-![Resume Refinement](https://github.com/FeichenYu2001/6210Capstone/raw/main/public/images/resume-refinement.png)  
+![Resume Refinement](images/resume_refinement.png)  
 
 ### Interview Preparation  
-![Interview Prep](https://github.com/FeichenYu2001/6210Capstone/raw/main/public/images/interview-prep.png)  
+![Interview Preparation](images/interview%20preparation.png)  
 
 ### Application Tracking  
-![Application Tracking 1](https://github.com/FeichenYu2001/6210Capstone/raw/main/public/images/application-tracking-1.png)  
-![Application Tracking 2](https://github.com/FeichenYu2001/6210Capstone/raw/main/public/images/application-tracking-2.png)  
+![Applied Jobs](images/applied_jobs.png)  
 
 ### Company Dashboard & Job Management  
-![Company Dashboard](https://github.com/FeichenYu2001/6210Capstone/raw/main/public/images/company-dashboard.png)  
-![Manage Jobs](https://github.com/FeichenYu2001/6210Capstone/raw/main/public/images/manage-jobs.png)  
+![Company Dashboard](images/company_dashboard.png)  
+![Job Post Form](images/company_jobpost.png)  
+![Manage Jobs](images/company_managejob.png)  
 
 ---
 
@@ -47,12 +47,12 @@ An interactive, full-stack web portal where **job seekers** can build and refine
 - Python 3.8+ & pip  
 - MongoDB running locally or remotely  
 
-### 
+### Initiation
+
 1. Clone the repo  
 ```bash
 git clone https://github.com/FeichenYu2001/6210Capstone.git
 cd 6210Capstone
-
 
 2. Install dependencies
 bash
