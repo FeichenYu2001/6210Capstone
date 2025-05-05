@@ -13,106 +13,107 @@ import { logoutUser } from "../../actions/authActions";
 import '../Styles/Applicant/Profile.css';
 
 function RefineResume(props) {
-	const { user } = props.auth;
-	const [completeness, setCompleteness] = useState(0);
+  const { user } = props.auth;
+  const [completeness, setCompleteness] = useState(0);
 
-	const onLogoutClick = e => {
-		e.preventDefault();
-		props.logoutUser();
-	};
+  const onLogoutClick = e => {
+    e.preventDefault();
+    props.logoutUser();
+  };
 
-	useEffect(() => {
-		axios.get(`http://localhost:1234/Applicant/${user.aid}`)
-			.then(res => {
-				const data = res.data;
-				let filled = 0;
-				let totalFields = 0;
+  useEffect(() => {
+    axios.get(`http://localhost:1234/Applicant/${user.aid}`)
+      .then(res => {
+        const data = res.data;
+        let filled = 0, totalFields = 0;
+        const checkAndCount = field => {
+          totalFields++;
+          if (field) filled++;
+        };
+        // count profile fields
+        checkAndCount(data.name);
+        checkAndCount(data.email);
+        checkAndCount(data.gender);
+        checkAndCount(data.phoneno);
+        checkAndCount(data.dob);
+        checkAndCount(data.qualification);
+        checkAndCount(data.experience && data.experience !== "--");
+        checkAndCount(data.currentJob);
+        checkAndCount(data.currentCompany);
+        checkAndCount(data.address?.city);
+        checkAndCount(data.address?.state);
+        checkAndCount(data.socialMedia?.linkedin);
 
-				const checkAndCount = field => {
-					totalFields++;
-					if (field) filled++;
-				};
+        setCompleteness(totalFields > 0
+          ? Math.round((filled / totalFields) * 100)
+          : 0);
+      })
+      .catch(err => console.error("Error fetching applicant data:", err));
+  }, [user.aid]);
 
-				checkAndCount(data.name);
-				checkAndCount(data.email);
-				checkAndCount(data.gender);
-				checkAndCount(data.phoneno);
-				checkAndCount(data.dob);
-				checkAndCount(data.qualification);
-				checkAndCount(data.experience && data.experience !== "--");
-				checkAndCount(data.currentJob);
-				checkAndCount(data.currentCompany);
-				checkAndCount(data.address?.city);
-				checkAndCount(data.address?.state);
-				checkAndCount(data.socialMedia?.linkedin);
+  return (
+    <div className="Profile">
+      <Hero logout={onLogoutClick} user={user} />
 
-				const percentage = totalFields > 0 ? Math.round((filled / totalFields) * 100) : 0;
-				setCompleteness(percentage);
-			})
-			.catch(err => {
-				console.error("Error fetching applicant data:", err);
-			});
-	}, [user.aid]);
+      <div className="row mx-0 mt-5 pb-5">
+        {/* Sidebar */}
+        <div className="col-lg-3" style={{ borderRight: "1px solid #eee" }}>
+          <div style={{ marginTop: "20px", marginLeft: "20px" }}>
+            <button
+              className="goback"
+              onClick={() => props.history.push("/Dashboard")}
+              style={{
+                border: "1px solid #e9896a",
+                borderRadius: "12px",
+                padding: "6px 14px",
+                background: "none",
+                color: "#e9896a",
+                fontWeight: "500",
+                display: "flex",
+                alignItems: "center"
+              }}
+            >
+              <IoIosArrowBack size={18} style={{ marginRight: "6px" }} />
+              Dashboard
+            </button>
+          </div>
 
-	return (
-		<div className="Profile">
-			<Hero logout={onLogoutClick} user={user} />
+          <SideNav logout={onLogoutClick} />
+          <CircularProgress completeness={completeness} />
+        </div>
 
-			<div className="row mx-0 mt-5 pb-5">
-				{/* Sidebar */}
-				<div className="col-lg-3" style={{ borderRight: "1px solid #eee" }}>
-					<div style={{ marginTop: "20px", marginLeft: "20px" }}>
-						<button
-							className="goback"
-							onClick={() => props.history.push("/Dashboard")}
-							style={{
-								border: "1px solid #e9896a",
-								borderRadius: "12px",
-								padding: "6px 14px",
-								background: "none",
-								color: "#e9896a",
-								fontWeight: "500",
-								display: "flex",
-								alignItems: "center"
-							}}
-						>
-							<IoIosArrowBack size={18} style={{ marginRight: "6px" }} />
-							Dashboard
-						</button>
-					</div>
+        {/* Main Content */}
+        <div className="col-lg-9">
+          <div className="DashboardHeading mb-3">
+            <h3>Resume Refinement</h3>
+          </div>
 
-					<SideNav logout={onLogoutClick} />
-					<CircularProgress completeness={completeness} />
-				</div>
+          {/* Embedded Flask page via iframe */}
+          <div style={{ width: '100%', height: '800px', marginBottom: '2rem' }}>
+            <iframe
+              src="http://127.0.0.1:5000/resume_refinement"
+              title="Resume Refinement"
+              width="100%"
+              height="100%"
+              style={{
+                border: '1px solid #ccc',
+                borderRadius: '8px'
+              }}
+            />
+          </div>
+        </div>
+      </div>
 
-				{/* Main Content */}
-				<div className="col-lg-9">
-					<div className="DashboardHeading mb-3">
-						<h3>Resume Refinement</h3>
-					</div>
-
-					<div className="interview-iframe">
-						<iframe
-							src="http://127.0.0.1:5000/resume_refinement"
-							title="Resume Refinement"
-							width="100%"
-							height="700px"
-							style={{ border: "1px solid #ccc", borderRadius: "8px" }}
-						/>
-					</div>
-				</div>
-			</div>
-
-			<Footer />
-		</div>
-	);
+      <Footer />
+    </div>
+  );
 }
 
 const mapStateToProps = state => ({
-	auth: state.auth
+  auth: state.auth
 });
 
 export default connect(
-	mapStateToProps,
-	{ logoutUser }
+  mapStateToProps,
+  { logoutUser }
 )(withRouter(RefineResume));
