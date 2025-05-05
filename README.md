@@ -53,6 +53,8 @@ An interactive, full-stack web portal where **job seekers** can build and refine
 ```bash
 git clone https://github.com/FeichenYu2001/6210Capstone.git
 cd 6210Capstone
+```
+
 
 2. Install dependencies
 bash
